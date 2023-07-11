@@ -2,7 +2,7 @@ import express from "express"
 import "dotenv/config"
 import { json } from "body-parser"
 import appDataSource from "./utils/POSTGRES"
-
+import MongoConnect from "./utils/MongoConnect"
 const cors = require("cors")
 
 const app = express()
@@ -14,7 +14,7 @@ app.use(cors())
 
 
 const PORT: any = process.env.PORT || 3000
-app.listen(PORT, () =>{
+app.listen(PORT,async () =>{
   console.log(`Listening on ${PORT}`)
 
   appDataSource.initialize().then((res)=>{
@@ -22,6 +22,8 @@ app.listen(PORT, () =>{
   }).catch(e=>{
     console.log(e)
   })
+
+  await MongoConnect()
 
   //connect to PS
   //connect to Mongoodse
