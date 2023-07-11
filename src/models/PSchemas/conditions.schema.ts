@@ -8,10 +8,6 @@ class Conditions extends TypeORM.BaseEntity{
 
     @TypeORM.Column()
     title : string
-    
-    @TypeORM.Column()
-    description:  string 
-
 
     @TypeORM.Column()
     created_at : Date
