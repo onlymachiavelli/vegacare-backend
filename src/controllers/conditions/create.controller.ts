@@ -8,7 +8,7 @@ const Create : RequestHandler =async (req, res) =>{
     //get the request body which contains title of the condition
     const title = req.body.title
     if (!title) {
-        res.status(400).send("Verify you data")
+        res.status(400).send("Verify your data")
         return 
     }
     const condi : any = new Conditions
