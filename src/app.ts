@@ -3,7 +3,7 @@ import "dotenv/config"
 import { json } from "body-parser"
 import appDataSource from "./utils/POSTGRES"
 import MongoConnect from "./utils/MongoConnect"
-import testRoute from "./routes/ping"
+import testRoute from "./routes/Ping"
 const cors = require("cors")
 
 const app = express()
@@ -18,15 +18,19 @@ const PORT: any = process.env.PORT || 3000
 app.listen(PORT,async () =>{
   console.log(`Listening on ${PORT}`)
 
-  appDataSource.initialize().then((res)=>{
+  appDataSource.initialize().then(async (resp)=>{
     console.log("Connected to the PSDB")
+    await MongoConnect().then(re=>{
+      
+      app.use("/ping", testRoute)
+
+      //the rest of the middle wares ! 
+    })
   }).catch(e=>{
     console.log(e)
   })
 
-  await MongoConnect()
 
-  app.use("/ping", testRoute)
 
   //connect to PS
   //connect to Mongoodse
