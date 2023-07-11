@@ -24,10 +24,6 @@ const GetWhere = async (data : any) => {
     return await Conditions.findBy(data)
 }
 
-
-
-
-
 export {
     GetAll,
     Save,
