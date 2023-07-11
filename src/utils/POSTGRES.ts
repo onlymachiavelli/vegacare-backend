@@ -7,7 +7,7 @@ const appDataSource = new DataSource({
   username: String(process.env.USER) || "",
   password: String(process.env.PASSWORD) || "",
   database: String(process.env.DATABASE) || "",
-  entities: [__dirname + "/../models/*.ts"],
+  entities: [__dirname + "/../models/PSchemas/*.ts"],
   synchronize: true,
   ssl:{
     rejectUnauthorized : false
