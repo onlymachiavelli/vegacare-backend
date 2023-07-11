@@ -3,6 +3,7 @@ import "dotenv/config"
 import { json } from "body-parser"
 import appDataSource from "./utils/POSTGRES"
 import MongoConnect from "./utils/MongoConnect"
+import testRoute from "./routes/ping"
 const cors = require("cors")
 
 const app = express()
@@ -24,6 +25,8 @@ app.listen(PORT,async () =>{
   })
 
   await MongoConnect()
+
+  app.use("/ping", testRoute)
 
   //connect to PS
   //connect to Mongoodse
