@@ -4,6 +4,8 @@ import { json } from "body-parser"
 import appDataSource from "./utils/POSTGRES"
 import MongoConnect from "./utils/MongoConnect"
 import testRoute from "./routes/Ping"
+import ConditionsRoute from "./routes/ConditionsRoute"
+
 const cors = require("cors")
 
 const app = express()
@@ -23,6 +25,7 @@ app.listen(PORT,async () =>{
     await MongoConnect().then(re=>{
       
       app.use("/ping", testRoute)
+      app.use("/conditions", ConditionsRoute)
 
       //the rest of the middle wares ! 
     })
