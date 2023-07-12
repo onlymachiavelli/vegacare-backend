@@ -7,6 +7,7 @@ import testRoute from "./routes/Ping"
 import ConditionsRoute from "./routes/ConditionsRoute"
 import MedicationsRoute from "./routes/MedicationsRoute"
 import AllergiesRoute from "./routes/AllergiesRoute"
+import UsersRoute from "./routes/UsersRoute"
 
 const cors = require("cors")
 
@@ -28,6 +29,7 @@ app.listen(PORT,async () =>{
       app.use("/conditions", ConditionsRoute)
       app.use("/medications", MedicationsRoute)
       app.use("/allergies", AllergiesRoute)
+      app.use("/users", UsersRoute)
 
       //the rest of the middle wares ! 
     })
