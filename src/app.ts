@@ -14,8 +14,6 @@ const app = express()
 
 app.use(json())
 app.use(cors())
-//use local env 
-
 
 
 const PORT: any = process.env.PORT || 3000
