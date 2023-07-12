@@ -9,8 +9,6 @@ import Gender from '../../@types/gender.enum'
 
 class Users extends TypeORM.BaseEntity{
 
-
-
     @TypeORM.PrimaryGeneratedColumn()
     id : number 
 
@@ -73,7 +71,6 @@ class Users extends TypeORM.BaseEntity{
     @TypeORM.Column({nullable : true, default : "" })
     medications : string
 
-    
 
 }
 
