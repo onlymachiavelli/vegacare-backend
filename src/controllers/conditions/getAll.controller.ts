@@ -1,6 +1,6 @@
 import {RequestHandler} from 'express'
 import * as Services from './../../services/conditions.services'
-
+import { Jwt } from 'jsonwebtoken'
 
 const GetAll : RequestHandler =async (req, res) =>{
     const datas : any = await Services.GetAll()
@@ -13,3 +13,6 @@ const GetAll : RequestHandler =async (req, res) =>{
 }
 
 export default GetAll
+
+
+

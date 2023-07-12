@@ -2,6 +2,8 @@ import {RequestHandler} from 'express'
 import * as Services from '../../services/users.services'
 
 
+/*
+
 const Update : RequestHandler =async (req, res) =>{
     const id : any = req.params.id
 
@@ -14,3 +16,6 @@ const Update : RequestHandler =async (req, res) =>{
 }
 
 export default Update
+*/
+
+export default true 

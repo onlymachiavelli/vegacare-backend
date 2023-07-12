@@ -15,6 +15,7 @@ const Create : Express.RequestHandler =async (req, res) =>{
     const data : any = req.body 
 
     if (!data.fullname || !data.email || !data.phone || !data.password || !data.bday ||!data.type || !data.address || !data.gender ){
+        
         res.status(400).send("Invalid Data")
         return 
     }
@@ -28,7 +29,13 @@ const Create : Express.RequestHandler =async (req, res) =>{
     user.gender = data.gender 
     user.address = data.address
     user.bday = data.bday
-    user.type = data.types
+    user.type = data.type
+    user.glycemia = 0
+    user.allergies = ""
+    user.conditons = ""
+    user.medications = ""
+    user.blood_type = "Unckown"
+
     user.avatar = data.gender == "male"? "male.png" :"female.png"
     const current : any = Format.format(
         new Date, 
@@ -37,21 +44,28 @@ const Create : Express.RequestHandler =async (req, res) =>{
     user.created_at = current 
     user.updated_at = current
 
-    const saltRound: number = Number(process.env.SALT)
+    const saltRound: number = Number(process.env.SALT )
     user.password = await bcrypt
       .genSalt(saltRound)
       .then((s) => bcrypt.hash(data.password, s))
 
     
-    await Services.Save(user).then((rs:any) =>{
-    
+    await Services.Save(user).then(async(rs:any) =>{
+        
+        let id : any 
+
+        const target : any = await Services.GetOne("email" , data.email) 
+        if (target) {
+            id = target.id
+        }
+        console.log(target.id, " " , target.Users)
         console.log("Saved the user in POSTGRESQL")
         const healthy : any = new usersModel()
-        healthy.id = rs.id
+        healthy.id = id
 
         HealthControllers.Create(healthy).then((r) =>{
             console.log("Reserved the same id in MDB")
-            const token : any = JWT.sign({id : rs.id} ,String(process.env.key) || "" , {expiresIn : "1d"})
+            const token : any = JWT.sign({id : id} ,String(process.env.key) || "" , {expiresIn : "1d"})
             res.status(200).send({
                 message : "Account is created ! " , 
                 token  :token

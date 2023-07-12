@@ -1,6 +1,6 @@
 
 enum TypeAcc {
-    patien = "patient" , 
+    patient = "patient" , 
     supervisor = "supervisor"
    }
    

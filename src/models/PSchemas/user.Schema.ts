@@ -59,7 +59,7 @@ class Users extends TypeORM.BaseEntity{
     blood_type : BloodType
 
 
-    @TypeORM.Column({nullable : true, default : 0 })
+    @TypeORM.Column({default : 0 })
     glycemia : number
 
     @TypeORM.Column({nullable : true, default : "" })

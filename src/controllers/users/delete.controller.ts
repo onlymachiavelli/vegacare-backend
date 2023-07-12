@@ -4,7 +4,7 @@ import * as Services from './../../services/medications.sevices'
 const Delete : RequestHandler =async (req, res) =>{
     const id : any = req.params.id
 
-    await Services.Delete(id).then((resp)=>{
+    await Services.Delete(id).then((resp:any)=>{
         res.status(201).send("Done deleting the condition") 
     }).catch((e)=>{
         res.status(400).send("Error deleting the condition")
