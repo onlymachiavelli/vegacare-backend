@@ -6,13 +6,13 @@ class Allergies extends TypeORM.BaseEntity{
     id : number
 
     @TypeORM.Column()
-    tilte : String
+    title : String
 
     @TypeORM.Column()
-    Created_at : Date
+    created_at : Date
 
     @TypeORM.Column()
-    Updated_at : Date
+    updated_at : Date
 }
 
 export default Allergies

@@ -1,19 +1,19 @@
-import Conditions from "../models/PSchemas/conditions.schema"
+import Allergies from "../models/PSchemas/Allergies.schema"
 
 const GetAll = async () =>{
-    return Conditions.find()
+    return Allergies.find()
 }
 
 const Save = async (data : any) => {
-    await Conditions.save(data)
+    await Allergies.save(data)
 }
 
 const Delete = async (id : any) => {
-    await Conditions.delete(id)
+    await Allergies.delete(id)
 }
 
 const GetBy = async (id : any, field:any) => {
-    return await Conditions.findOne(
+    return await Allergies.findOne(
         {
             [field] : id
         }
@@ -21,11 +21,11 @@ const GetBy = async (id : any, field:any) => {
 }
 
 const GetWhere = async (data : any) => {
-    return await Conditions.findBy(data)
+    return await Allergies.findBy(data)
 }
 
 const Update = async (id : any, data : any) => {
-    await Conditions.update(id , data)
+    await Allergies.update(id , data)
 }
 
 export {

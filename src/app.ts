@@ -5,6 +5,8 @@ import appDataSource from "./utils/POSTGRES"
 import MongoConnect from "./utils/MongoConnect"
 import testRoute from "./routes/Ping"
 import ConditionsRoute from "./routes/ConditionsRoute"
+import MedicationsRoute from "./routes/MedicationsRoute"
+import AllergiesRoute from "./routes/AllergiesRoute"
 
 const cors = require("cors")
 
@@ -26,6 +28,8 @@ app.listen(PORT,async () =>{
       
       app.use("/ping", testRoute)
       app.use("/conditions", ConditionsRoute)
+      app.use("/medications", MedicationsRoute)
+      app.use("/allergies", AllergiesRoute)
 
       //the rest of the middle wares ! 
     })
