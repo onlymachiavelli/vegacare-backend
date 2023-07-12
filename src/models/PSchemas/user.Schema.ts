@@ -1,13 +1,14 @@
 import * as TypeORM from 'typeorm'
-
+import Conditions from './conditions.schema'
+import Allergies from './Allergies.schema'
+import Medications from './Medications.schema'
+import TypeAcc from '../../@types/typeAcc'
 import BloodType from '../../@types/blood'
 import Gender from '../../@types/gender.enum'
 @TypeORM.Entity()
 
 class Users extends TypeORM.BaseEntity{
 
-
-    //userdata 
 
 
     @TypeORM.PrimaryGeneratedColumn()
@@ -34,13 +35,20 @@ class Users extends TypeORM.BaseEntity{
     
     @TypeORM.Column({nullable : false })
     bday : Date
+
+
+    @TypeORM.Column({nullable : true, default : ""})
+    avatar: string
     
-    @TypeORM.Column({nullable : false})
+    
+    @TypeORM.Column({nullable : false}) 
     created_at : Date 
     
     @TypeORM.Column({nullable : false})
     updated_at : Date
 
+    @TypeORM.Column()
+    type : TypeAcc
 
     //health data 
     @TypeORM.Column({nullable : true, default : 0 })
@@ -56,10 +64,19 @@ class Users extends TypeORM.BaseEntity{
     @TypeORM.Column({nullable : true, default : 0 })
     glycemia : number
 
-    
+    @TypeORM.Column({nullable : true, default : "" })
+    allergies : string
+
+    @TypeORM.Column({nullable : true, default : "" })
+    conditions : string
+
+    @TypeORM.Column({nullable : true, default : "" })
+    medications : string
 
     
-
-
 
 }
+
+
+
+export default Users
