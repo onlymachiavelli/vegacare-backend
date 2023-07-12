@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
             {
                 beat : {
                     type : Number  , 
-                    require: true 
+                    require: true
                 }, 
                 time :{
                     type : Date ,
