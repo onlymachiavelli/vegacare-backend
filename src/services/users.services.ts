@@ -11,9 +11,12 @@ const GetAll = async () =>{
     return await Users.find()
 }
 
-const GetOne = async (field : any, target : any) =>{
-    return await Users.findOneBy({
-        [field] : [target]
+const GetOne = async (field : any, trget : any) =>{
+    return await Users.findOne({
+        where : {
+            [field] : trget
+        } , 
+        select:target
     })
 }
 
@@ -25,11 +28,22 @@ const Delete = async (field : any, target : any ) =>{
     })
 }
 
+const GetPass = async (field : any , target : any ) =>{
+    return await Users.findOne({
+        where : {
+            [field] : target
+        } , 
+        select:["password"]
+    })
+    
+    
+}
 
 export {
 
     Save,
     GetAll,
     GetOne,
-    Delete
+    Delete, 
+    GetPass
 }
