@@ -16,6 +16,8 @@ const Create =async  (user : any ) =>{
 const GetOne = async (id : number) =>{
     return await usersModel.findById(id)
 }
+
+
 export { 
     GetAll, 
     Create , 

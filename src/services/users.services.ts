@@ -34,9 +34,11 @@ const GetPass = async (field : any , target : any ) =>{
             [field] : target
         } , 
         select:["password"]
-    })
-    
-    
+    })    
+}
+
+const Update = async (id : any, data : any) => {
+    await Users.update(id , data)
 }
 
 export {
@@ -45,5 +47,6 @@ export {
     GetAll,
     GetOne,
     Delete, 
-    GetPass
+    GetPass,
+    Update
 }
