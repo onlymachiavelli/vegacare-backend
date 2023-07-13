@@ -53,7 +53,7 @@ import { Server } from "socket.io";
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 const SocketPort = process.env.SOCKET_PORT || 8080
-io.on("connection", (socket) => {
+io.on("connection", (socket:any) => {
   // ...
 });
 
