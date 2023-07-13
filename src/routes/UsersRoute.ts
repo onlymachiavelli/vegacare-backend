@@ -10,6 +10,6 @@ MedicationsRoute.post("/", Create)
 MedicationsRoute.get("/", GetAll)
 //MedicationsRoute.put("/:id", Update)
 MedicationsRoute.delete("/:id", Delete)
-//MedicationsRoute.patch("/:id", Change)
+MedicationsRoute.patch("/:id", Change)
 
 export default MedicationsRoute
