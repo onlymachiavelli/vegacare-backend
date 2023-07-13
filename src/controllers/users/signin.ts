@@ -12,29 +12,21 @@ const SignIn : Express.RequestHandler = async (req, res) =>{
     const email = req.body.email
     const password = req.body.password
 
-    console.log({
-        email  :email , 
-        pass : password
-    })
-
     //get the user 
     const target : any = await Services.GetOne("email" , email)
     if (!target) {
         res.status(400).send("wrong user or password")
         return 
     }
-    console.log(target)
 
     //get the pass 
 
     const pass : any = await Services.GetPass("email" , email)
-    console.log(pass.password)
     
     //compare the pass
     const compare : boolean = await Bcrypt.compare(password , pass.password)
 
     if (!compare) {
-        
         res.status(400).send("wrong user or password")
         return
     }
@@ -46,12 +38,9 @@ const SignIn : Express.RequestHandler = async (req, res) =>{
     res.status(200).send({
         message : "logged in successfully" , 
         token  :token
-
     })
 
     return 
-
-
 
 }       
 
