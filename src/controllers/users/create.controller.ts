@@ -8,10 +8,7 @@ import Format from 'date-and-time'
 import bcrypt from 'bcrypt'
 import JWT from 'jsonwebtoken'
 const Create : Express.RequestHandler =async (req, res) =>{
-    //receive the api key 
-
-
-    //receive the user data through request body 
+    //place for the api Key verificator 
     const data : any = req.body 
 
     if (!data.fullname || !data.email || !data.phone || !data.password || !data.bday ||!data.type || !data.address || !data.gender ){
@@ -21,8 +18,6 @@ const Create : Express.RequestHandler =async (req, res) =>{
     }
 
     const user : any = new Users
-    //user health 
-
     user.fullname = data.fullname 
     user.email  = data.email 
     user.phone = data.phone

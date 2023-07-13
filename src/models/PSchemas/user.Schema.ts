@@ -15,14 +15,14 @@ class Users extends TypeORM.BaseEntity{
     @TypeORM.Column({nullable : false}) 
     fullname  : string 
 
-    @TypeORM.Column({nullable : false})
+    @TypeORM.Column({nullable : false, unique : true })
     email : string 
      
     @TypeORM.Column({nullable : false})
     password : string
 
 
-    @TypeORM.Column({nullable : false})
+    @TypeORM.Column({nullable : false, unique : true })
     phone : string
 
     @TypeORM.Column({nullable : false})
