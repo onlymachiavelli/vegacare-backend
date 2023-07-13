@@ -15,14 +15,30 @@ const Create : Express.RequestHandler =async (req, res) =>{
     //place for the api Key verificator 
     const data : any = req.body 
 
+    //check if empty
     if (!data.fullname || !data.email || !data.phone || !data.password || !data.bday ||!data.type || !data.address || !data.gender ){
         res.status(400).send("Invalid Data")
         return 
     }
 
+    //check if mail is valid
     if(!regexMail.test(data.email)){
         res.status(400).send("Invalid Data")
         return 
+    }
+
+    //check if phone number is valid
+    if(data.phone.length>12||data.phone.length<6){
+        res.status(400).send("Invalid Data")
+        return
+    }
+
+    const splitBDay : number[] = data.bday.split("-")
+    if(splitBDay.length!=3){
+        if(splitBDay[0]>1800||splitBDay[1]>12||splitBDay[1]<0||splitBDay[2]>31||splitBDay[2]<0){
+            res.status(400).send("Invalid Data")
+            return
+        }
     }
 
     const user : any = new Users
