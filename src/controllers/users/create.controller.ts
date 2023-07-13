@@ -68,7 +68,7 @@ const Create : Express.RequestHandler =async (req, res) =>{
 
         HealthControllers.Create(healthy).then((r) =>{
             console.log("Reserved the same id in MDB")
-            const token : any = JWT.sign({id : id} ,String(process.env.key) || "" , {expiresIn : "7d"})
+            const token : any = JWT.sign({id : id} ,String(process.env.KEY) || "" , {expiresIn : "7d"})
             res.status(200).send({
                 message : "Account is created ! " , 
                 token  :token

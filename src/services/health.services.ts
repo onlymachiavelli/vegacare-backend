@@ -14,7 +14,9 @@ const Create =async  (user : any ) =>{
 
 
 const GetOne = async (id : number) =>{
-    return await usersModel.findById(id)
+    return await usersModel.findOne({
+        id : id
+    })
 }
 
 

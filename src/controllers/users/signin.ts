@@ -41,7 +41,7 @@ const SignIn : Express.RequestHandler = async (req, res) =>{
 
 
     
-    const token : any = JWT.sign({id : target.id} ,String(process.env.key) || "" , {expiresIn : "7d"})
+    const token : any = JWT.sign({id : target.id} ,String(process.env.KEY) || "" , {expiresIn : "7d"})
 
     res.status(200).send({
         message : "logged in successfully" , 
