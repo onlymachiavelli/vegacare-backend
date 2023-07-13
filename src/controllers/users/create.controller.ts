@@ -12,10 +12,7 @@ const regexMailString : string = "^.*@.*\.(a(d|e|f|g|i|l|m|n|o|r|s|t|q|u|w|x|z)|
 const regexMail : any = new RegExp(regexMailString)
 
 const Create : Express.RequestHandler =async (req, res) =>{
-    //receive the api key 
-
-
-    //receive the user data through request body 
+    //place for the api Key verificator 
     const data : any = req.body 
 
     if (!data.fullname || !data.email || !data.phone || !data.password || !data.bday ||!data.type || !data.address || !data.gender ){
@@ -29,8 +26,6 @@ const Create : Express.RequestHandler =async (req, res) =>{
     }
 
     const user : any = new Users
-    //user health 
-
     user.fullname = data.fullname 
     user.email  = data.email 
     user.phone = data.phone
@@ -73,7 +68,7 @@ const Create : Express.RequestHandler =async (req, res) =>{
 
         HealthControllers.Create(healthy).then((r) =>{
             console.log("Reserved the same id in MDB")
-            const token : any = JWT.sign({id : id} ,String(process.env.key) || "" , {expiresIn : "1d"})
+            const token : any = JWT.sign({id : id} ,String(process.env.key) || "" , {expiresIn : "7d"})
             res.status(200).send({
                 message : "Account is created ! " , 
                 token  :token
