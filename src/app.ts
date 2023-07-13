@@ -43,3 +43,19 @@ app.listen(PORT,async () =>{
   //connect to Mongoodse
 })
 
+
+
+// socket part 
+
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+const SocketPort = process.env.SOCKET_PORT || 8080
+io.on("connection", (socket) => {
+  // ...
+});
+
+httpServer.listen(SocketPort);
+
