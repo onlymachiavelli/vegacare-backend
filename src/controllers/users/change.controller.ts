@@ -24,7 +24,7 @@ const glycemia_max : number = 100
 
 
 const Update : RequestHandler =async (req, res) =>{
-    const id : any = req.params.id
+    const id : any = req.body.id
     const datas : any = {}
     //check if size is valid
     if(req.body.height){
