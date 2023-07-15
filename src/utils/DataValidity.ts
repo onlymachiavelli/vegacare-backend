@@ -7,7 +7,7 @@ const isDateValid = (date : string) =>{
     const day : number = Number(splitDateS[2])
 
     //check if year is valid aka if it's older than 1800
-    if (year>1800) return false
+    if (year<1800) return false
 
     //check if month is valid aka if it's between 1 and 12
     if (month>12||month<1) return false
