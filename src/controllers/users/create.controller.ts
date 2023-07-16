@@ -11,25 +11,22 @@ import JWT from 'jsonwebtoken'
 import * as Validation from "../../utils/DataValidity"
 
 
-const Create : Express.RequestHandler =async (req, res) =>{
+const Create : Express.RequestHandler =async (req, res, nxt) =>{
 console.log("received a request ")
     //place for the api Key verificator 
     const data : any = req.body 
 
-    //check if empty
     if (!data.fullname || !data.email || !data.phone || !data.password || !data.bday ||!data.type || !data.address || !data.gender ){
         res.status(400).send("Invalid Data")
         return 
     }
 
-    //check if mail is valid
     if(!Validation.isMailValid(data.email)){
 	console.log("mail error ! ")
         res.status(400).send("Invalid Data")
         return 
     }
 
-    //check if phone number is valid
     if(!Validation.isPhoneNumberValid(data.phone)){
 	console.log("Phone Error  ")
         res.status(400).send("Invalid Data")
@@ -37,7 +34,6 @@ console.log("received a request ")
     }
 
 
-    //check if date is valide
     if(!Validation.isDateValid(data.bday)){
 	console.log("date error ! ")
 	console.log(data.bday)
@@ -46,7 +42,8 @@ console.log("received a request ")
     }
 
 
-    //does the user exist ? 
+   
+   
     const doesExistMail : any = await Services.GetOne("email" ,data.email )
     if (doesExistMail){
         res.status(400).send("Email already used ! ")
@@ -59,8 +56,10 @@ console.log("received a request ")
         return
     }
 
+   
 
-    const user : any = new Users
+    try {
+        const user : any = new Users
     user.fullname = data.fullname 
     user.email  = data.email 
     user.phone = data.phone
@@ -122,6 +121,14 @@ console.log("received a request ")
         })
         
     })
+    }
+
+    catch(e){
+
+        console.log("error section but the server didn't stop :  " , e)
+
+        nxt()
+    }
    
 
 
