@@ -12,6 +12,7 @@ import * as Validation from "../../utils/DataValidity"
 
 
 const Create : Express.RequestHandler =async (req, res) =>{
+console.log("received a request ")
     //place for the api Key verificator 
     const data : any = req.body 
 
@@ -23,21 +24,41 @@ const Create : Express.RequestHandler =async (req, res) =>{
 
     //check if mail is valid
     if(!Validation.isMailValid(data.email)){
+	console.log("mail error ! ")
         res.status(400).send("Invalid Data")
         return 
     }
 
     //check if phone number is valid
     if(!Validation.isPhoneNumberValid(data.phone)){
+	console.log("Phone Error  ")
         res.status(400).send("Invalid Data")
         return
     }
 
+
     //check if date is valide
     if(!Validation.isDateValid(data.bday)){
+	console.log("date error ! ")
+	console.log(data.bday)
         res.status(400).send("Invalid Data")
         return
     }
+
+
+    //does the user exist ? 
+    const doesExistMail : any = await Services.GetOne("email" ,data.email )
+    if (doesExistMail){
+        res.status(400).send("Email already used ! ")
+        return
+    }
+
+    const doesExistPhone : any = await Services.GetOne("phone" ,data.phone )
+    if (doesExistPhone){
+        res.status(400).send("Phone already used ! ")
+        return
+    }
+
 
     const user : any = new Users
     user.fullname = data.fullname 

@@ -9,7 +9,7 @@ const GetMe:Express.RequestHandler = async (req, res) =>{
     const [Bearer, token] : any = req.headers.authorization?.split(" ")
 
 
-    if (!Bearer || !token  ) {
+    if (!Bearer || !token) {
         res.status(401).send("No token")
         return
     }
