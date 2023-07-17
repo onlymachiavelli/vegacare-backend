@@ -4,6 +4,10 @@ import * as Services from './../../services/users.services'
 import * as Serv from './../../services/health.services'
 const GetMe:Express.RequestHandler = async (req, res, next) =>{
     
+    if(!req.headers.authorization){
+        res.status(401).send("No token")
+        return
+    }
     console.log(req.headers.authorization)
     //get the token bearer 
     const [Bearer, token] : any = req.headers.authorization?.split(" ")
