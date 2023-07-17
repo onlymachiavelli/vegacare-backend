@@ -4,7 +4,7 @@ import * as Services from './../../services/allergies.sevices'
 import Format from 'date-and-time'
 
 
-const Create : RequestHandler =async (req, res) =>{
+const Create : RequestHandler =async (req, res, next) =>{
     //get the request body which contains title of the condition
     const title = req.body.title
     if (!title) {
@@ -21,12 +21,19 @@ const Create : RequestHandler =async (req, res) =>{
     condi.created_at = format
     condi.updated_at = format
 
-    await Services.Save(condi).then((resp)=>{
-        res.status(201).send("Done saving the condition")
-    }).catch((e)=>{
-        res.status(400).send("Error saving the condition")
+    try{
+        await Services.Save(condi).then((resp)=>{
+            res.status(201).send("Done saving the condition")
+        }).catch((e)=>{
+            res.status(400).send("Error saving the condition")
+            console.log(e)
+        })
+    }
+    catch(e){
         console.log(e)
-    })
+        next()
+    }
+    
 }
 
 export default Create

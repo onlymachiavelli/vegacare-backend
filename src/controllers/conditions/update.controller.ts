@@ -4,7 +4,7 @@ import * as Services from '../../services/conditions.services'
 import Format from 'date-and-time'
 
 
-const Update : RequestHandler =async (req, res) =>{
+const Update : RequestHandler =async (req, res, next) =>{
     const id : any = req.params.id
 
     const title = req.body.title
@@ -21,12 +21,19 @@ const Update : RequestHandler =async (req, res) =>{
     )
     condi.updated_at = format
 
-    await Services.Update(id, condi).then((resp)=>{
-        res.status(201).send("Done updating the condition")
-    }).catch((e)=>{
-        res.status(400).send("Error updating the condition")
+    try{
+        await Services.Update(id, condi).then((resp)=>{
+            res.status(201).send("Done updating the condition")
+        }).catch((e)=>{
+            res.status(400).send("Error updating the condition")
+            console.log(e)
+        })
+    }
+    catch(e){
         console.log(e)
-    })
+        next()
+    }
+    
 }
 
 export default Update

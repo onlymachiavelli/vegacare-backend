@@ -2,9 +2,10 @@ import {RequestHandler} from 'express'
 import Allergies from '../../models/PSchemas/Allergies.schema'
 import * as Services from '../../services/allergies.sevices'
 import Format from 'date-and-time'
+import { nextTick } from 'process'
 
 
-const Update : RequestHandler =async (req, res) =>{
+const Update : RequestHandler =async (req, res, next) =>{
     const id : any = req.params.id
 
     const title = req.body.title
@@ -20,13 +21,20 @@ const Update : RequestHandler =async (req, res) =>{
         'YYYY-MM-DD HH:mm:ss'
     )
     condi.updated_at = format
-
-    await Services.Update(id, condi).then((resp)=>{
-        res.status(201).send("Done updating the condition")
-    }).catch((e)=>{
-        res.status(400).send("Error updating the condition")
+    
+    try{
+        await Services.Update(id, condi).then((resp)=>{
+            res.status(201).send("Done updating the condition")
+        }).catch((e)=>{
+            res.status(400).send("Error updating the condition")
+            console.log(e)
+        })
+    }
+    catch(e){
         console.log(e)
-    })
+        next()
+    }
+    
 }
 
 export default Update
