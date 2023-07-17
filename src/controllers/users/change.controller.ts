@@ -112,7 +112,9 @@ const Update : RequestHandler =async (req, res, next) =>{
         }
         datas.glycemia = req.body.glycemia
     }
-
+    datas.allergies = req.body.allergies
+    datas.medications = req.body.medications
+    datas.conditions = req.body.conditions
     console.log(datas)
     if(Object.keys(datas).length === 0){
         res.status(400).send("No data given")
