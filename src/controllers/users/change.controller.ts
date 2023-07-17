@@ -23,7 +23,7 @@ const glycemia_min : number = 0
 const glycemia_max : number = 100
 
 
-const Update : RequestHandler =async (req, res) =>{
+const Update : RequestHandler =async (req, res, next) =>{
     const id : any = req.body.id
     const datas : any = {}
     //check if size is valid
@@ -62,12 +62,18 @@ const Update : RequestHandler =async (req, res) =>{
         datas.glycemia = req.body.glycemia
     }
 
-    await Services.Update(id, datas).then((resp)=>{
-        res.status(201).send("Done changing the condition")
-    }).catch((e)=>{
-        res.status(400).send("Error changing the condition")
+    try {
+        await Services.Update(id, datas).then((resp)=>{
+            res.status(201).send("Done changing the condition")
+        }).catch((e)=>{
+            res.status(400).send("Error changing the condition")
+            console.log(e)
+        })
+    }
+    catch(e){
         console.log(e)
-    })
+        next()
+    }
 }
 
 export default Update
