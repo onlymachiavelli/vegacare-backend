@@ -2,13 +2,14 @@ import * as Express from 'express'
 import Jwt  from 'jsonwebtoken'
 import * as Services from './../../services/users.services'
 import * as Serv from './../../services/health.services'
+
+
 const GetMe:Express.RequestHandler = async (req, res, next) =>{
     
     if(!req.headers.authorization){
         res.status(401).send("No token")
         return
     }
-    console.log(req.headers.authorization)
     //get the token bearer 
     const [Bearer, token] : any = req.headers.authorization?.split(" ")
 
@@ -19,7 +20,17 @@ const GetMe:Express.RequestHandler = async (req, res, next) =>{
     }
     //get payload 
     console.log("token : " , token)
-    const payload : any = Jwt.verify(token, String(process.env.KEY)  || "")
+
+    let payload : any
+    try{
+        payload = Jwt.verify(token, String(process.env.KEY)  || "")
+    }
+    catch(e){
+        console.log(e)
+        res.status(401).send("Invalid token")
+        next()
+        return
+    }
     if(!payload){
         res.status(401).send("Invalid token")
         return

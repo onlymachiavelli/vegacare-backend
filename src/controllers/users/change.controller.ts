@@ -1,5 +1,6 @@
 import {RequestHandler} from 'express'
 import * as Services from '../../services/users.services'
+import Jwt  from 'jsonwebtoken'
 
 function isBetween(x : number,min : number,max : number){
     return x>=min && x<=max
@@ -24,8 +25,45 @@ const glycemia_max : number = 100
 
 
 const Update : RequestHandler =async (req, res, next) =>{
-    const id : any = req.body.id
+    //verify authentification
+    if(!req.headers.authorization){
+        res.status(401).send("No token")
+        return
+    }
+    console.log(req.headers.authorization)
+    //get the token bearer 
+    const [Bearer, token] : any = req.headers.authorization?.split(" ")
+
+
+    if (!Bearer || !token) {
+        res.status(401).send("No token")
+        return
+    }
+    //get payload 
+    console.log("token : " , token)
+
+    let payload : any
+    try{
+        payload = Jwt.verify(token, String(process.env.KEY)  || "")
+    }
+    catch(e){
+        console.log(e)
+        res.status(401).send("Invalid token")
+        next()
+        return
+    }
+
+    if(!payload){
+        res.status(401).send("Invalid token")
+        return
+    }
+    console.log(payload)
+
+    const id : any = payload.id
+
+
     const datas : any = {}
+
     //check if size is valid
     if(req.body.height){
         if(!isBetween(req.body.height,height_min,height_max)){
@@ -33,6 +71,7 @@ const Update : RequestHandler =async (req, res, next) =>{
             return 
         }
         datas.height = req.body.height
+        console.log("ok")
     }
 
     //check if weight is valide
@@ -62,6 +101,11 @@ const Update : RequestHandler =async (req, res, next) =>{
         datas.glycemia = req.body.glycemia
     }
 
+    console.log(datas)
+    if(Object.keys(datas).length === 0){
+        res.status(400).send("No data given")
+        return 
+    }
     try {
         await Services.Update(id, datas).then((resp)=>{
             res.status(201).send("Done changing the condition")
