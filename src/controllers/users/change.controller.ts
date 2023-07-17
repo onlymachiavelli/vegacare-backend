@@ -26,7 +26,10 @@ const glycemia_max : number = 100
 
 const Update : RequestHandler =async (req, res, next) =>{
     //verify authentification
+    console.log("header",req.headers.authorization)
     if(!req.headers.authorization){
+        console.log("No fucking token")
+
         res.status(401).send("No token")
         return
     }
@@ -36,7 +39,9 @@ const Update : RequestHandler =async (req, res, next) =>{
 
 
     if (!Bearer || !token) {
+    console.log("No token")
         res.status(401).send("No token")
+        
         return
     }
     //get payload 
@@ -48,12 +53,15 @@ const Update : RequestHandler =async (req, res, next) =>{
     }
     catch(e){
         console.log(e)
+        console.log("unvalid payload 1")
         res.status(401).send("Invalid token")
         next()
         return
     }
 
     if(!payload){
+        console.log("unvalid payload")
+
         res.status(401).send("Invalid token")
         return
     }
@@ -67,6 +75,8 @@ const Update : RequestHandler =async (req, res, next) =>{
     //check if size is valid
     if(req.body.height){
         if(!isBetween(Number(req.body.height),height_min,height_max)){
+        console.log("height issue")
+
             res.status(400).send("Invalid Data")
             return 
         }
@@ -76,7 +86,9 @@ const Update : RequestHandler =async (req, res, next) =>{
 
     //check if weight is valide
     if(req.body.weight){
-        if(!isBetween(Number(req.body.wheight),weight_min,weight_max)){
+        if(!isBetween(Number(req.body.weight),weight_min,weight_max)){
+        console.log("weight issue")
+
             res.status(400).send("Invalid Data")
             return 
         }
