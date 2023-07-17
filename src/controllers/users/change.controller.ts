@@ -66,7 +66,7 @@ const Update : RequestHandler =async (req, res, next) =>{
 
     //check if size is valid
     if(req.body.height){
-        if(!isBetween(req.body.height,height_min,height_max)){
+        if(!isBetween(Number(req.body.height),height_min,height_max)){
             res.status(400).send("Invalid Data")
             return 
         }
@@ -76,7 +76,7 @@ const Update : RequestHandler =async (req, res, next) =>{
 
     //check if weight is valide
     if(req.body.weight){
-        if(!isBetween(req.body.wheight,weight_min,weight_max)){
+        if(!isBetween(Number(req.body.wheight),weight_min,weight_max)){
             res.status(400).send("Invalid Data")
             return 
         }
@@ -94,7 +94,7 @@ const Update : RequestHandler =async (req, res, next) =>{
 
     //check if glycemia is valide
     if(req.body.glycemia){
-        if(!isBetween(req.body.glycemia,glycemia_min,glycemia_max)){
+        if(!isBetween(Number(req.body.glycemia),glycemia_min,glycemia_max)){
             res.status(400).send("Invalid Data")
             return 
         }
