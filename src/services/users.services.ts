@@ -1,7 +1,7 @@
 import Users from "../models/PSchemas/user.Schema"
 
 
-const target :any =  ["id", "fullname" , "email"  , "phone" , "gender" , "address", "bday","avatar" , "created_at", "updated_at" , "type" , "blood_type" , "glycemia" , "allergies", "conditions" , "medications"]
+const target :any =  ["id", "fullname" , "email"  , "phone" , "gender" , "address", "bday","avatar" , "created_at", "updated_at" , "type" , "blood_type" , "glycemia" , "allergies", "conditions" , "medications","height","weight"]
 
 const Save = async (user: any) =>{
     await Users.save(user)
