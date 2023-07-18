@@ -61,11 +61,6 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
         return
     }
 
-
-
-
-
-    //get each id 
     let IdAller : any = rawUserData.allergies.split(",")
     const IdCond : any = rawUserData.conditions.split(",")
     const IdMed : any = rawUserData.medications.split(",")
@@ -90,7 +85,7 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
     for (let i =0;i<IdCond.length;i++){
         try{
 
-            const row = await AllergiesService.GetBy(Number(IdCond[i]),"id")
+            const row = await ConditionsService.GetBy(Number(IdCond[i]),"id")
             condi.push(row)
         }
         catch(e){
@@ -102,7 +97,7 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
     for (let i =0;i<IdMed.length;i++){
         try{
 
-            const row = await AllergiesService.GetBy(Number(IdMed[i]),"id")
+            const row = await MedicationsService.GetBy(Number(IdMed[i]),"id")
             med.push(row)
         }
         catch(e){
