@@ -63,24 +63,39 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
         return
     }
 
-    const cleanUserData : any = {
-        height: rawUserData.height,
-        weight: rawUserData.weight,
+    let cleanUserData : any = {
+        height: rawUserData.height || "0",
+        weight: rawUserData.weight || "0",
         blood_type: rawUserData.blood_type,
-        glycemia: rawUserData.glycemia,
+        glycemia: rawUserData.glycemia || "0",
         allergies:[],
         conditions: [],
         medications: []
     }
 
-    const IDsAllergies : number[]= rawUserData.allergies.split(",").map((element: any)=> {Number(element)}) 
-    const IDsConditions : number[]= rawUserData.conditions.split(",").map((element: any)=> {Number(element)}) 
-    const IDsMedications : number[]= rawUserData.medications.split(",").map((element: any)=> {Number(element)}) 
+    rawUserData.allergies ="1,2"
+    console.log(rawUserData.allergies)
+    const IDsAllergies : number[]= rawUserData.allergies.split(",").map((element: any)=> {return Number(element)}) 
+    const IDsConditions : number[]= rawUserData.conditions.split(",").map((element: any)=> {return Number(element)}) 
+    const IDsMedications : number[]= rawUserData.medications.split(",").map((element: any)=> {return Number(element)}) 
 
-    cleanUserData.allergies = IDsAllergies.map((element) => { AllergiesService.GetBy(element , id) })
-    cleanUserData.conditions = IDsConditions.map((element) => { ConditionsService.GetBy(element , id) })
-    cleanUserData.medications= IDsMedications.map((element) => { MedicationsService.GetBy(element , id) })
+    console.log(IDsAllergies)
+    cleanUserData.allergies = IDsAllergies.map(async (element) => { return await AllergiesService.GetBy(element , "id") })
+    cleanUserData.conditions = IDsConditions.map(async (element) => { return await ConditionsService.GetBy(element , "id") })
+    cleanUserData.medications= IDsMedications.map(async (element) => { return await MedicationsService.GetBy(element , "id") })
+    console.log(await AllergiesService.GetBy(1 , "id"))
 
+
+    let allr : any = []
+    //allergies 
+    const targets = [1,2,3]
+    targets.map(async(data: any, index:any)=>{
+        const element :any =  await AllergiesService.GetBy(data, "id")
+        console.log("thing",element )
+        if (element)allr.push(element)
+    })
+
+    console.log("results", allr)
 
     //send the data 
     res.status(200).send(cleanUserData)

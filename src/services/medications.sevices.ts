@@ -14,9 +14,9 @@ const Delete = async (id : any) => {
 
 const GetBy = async (id : any, field:any) => {
     return await Medications.findOne(
-        {
+        {where:{
             [field] : id
-        }
+        }}
     )
 }
 
