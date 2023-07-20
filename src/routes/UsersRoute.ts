@@ -8,7 +8,8 @@ import SignIn from "./../controllers/users/signin"
 import GetMe from "../controllers/users/getMe.controller"
 import GetCleanData from "../controllers/users/getCleanData.controller"
 import resetPassword from "../controllers/users/resetPassword.controller"
-
+import Generate from "../controllers/users/GenerateCode"
+import ResetPass from "../controllers/users/ResetPass";
 const UsersRoute = Router()
 
 UsersRoute.post("/", Create)
@@ -20,5 +21,7 @@ UsersRoute.post("/login", SignIn)
 UsersRoute.get("/me", GetMe)
 UsersRoute.get("/cleanData", GetCleanData)
 UsersRoute.post("/resetpassword", resetPassword)
+UsersRoute.post("/reqReset", Generate)
+UsersRoute.post("/reset", ResetPass)
 
 export default UsersRoute
