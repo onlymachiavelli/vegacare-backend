@@ -1,6 +1,7 @@
 import {RequestHandler} from 'express'
 import * as Services from '../../services/users.services'
 import Jwt  from 'jsonwebtoken'
+import Format from 'date-and-time'
 
 function isBetween(x : number,min : number,max : number){
     return x>=min && x<=max
@@ -114,6 +115,13 @@ const Update : RequestHandler =async (req, res, next) =>{
     if (req.body.allergies)datas.allergies = req.body.allergies
     if (req.body.medications)datas.medications = req.body.medications
     if (req.body.conditions)datas.conditions = req.body.conditions
+
+    const current : any = Format.format(
+        new Date, 
+        "YYYY-MM-DD HH:mm:ss"
+    )
+    datas.updated_at = current
+
     console.log(datas)
     if(Object.keys(datas).length === 0){
         res.status(400).send("No data given")
