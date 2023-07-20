@@ -8,7 +8,8 @@ import ConditionsRoute from "./routes/ConditionsRoute"
 import MedicationsRoute from "./routes/MedicationsRoute"
 import AllergiesRoute from "./routes/AllergiesRoute"
 import UsersRoute from "./routes/UsersRoute"
-//import {SocketIOService, createEvents} from "./utils/SocketConnection"
+import MailRoute from "./routes/SendMail.Route"
+
 import {createServer} from "http";
 import { Server } from "socket.io";
 import { connected } from "process"
@@ -34,6 +35,7 @@ app.listen(PORT,async () =>{
       app.use("/medications", MedicationsRoute)
       app.use("/allergies", AllergiesRoute)
       app.use("/users", UsersRoute)
+      app.use("/mails", MailRoute)
 
       //the rest of the middle wares ! 
     })
