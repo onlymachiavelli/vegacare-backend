@@ -22,6 +22,7 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
 
     if (!Bearer || !token) {
     console.log("No token")
+    
         res.status(401).send("No token")
         
         return
@@ -53,37 +54,61 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
 
     const rawUserData :any = await Services.GetOne("id",id)
     //check user 
-    if (!rawUserData) {
-        res.status(401).send("Unauthorized")
-        return
-    }
+    console.log("raw" ,rawUserData)
     
     if (rawUserData.type != "patient") {
         res.status(401).send("Unauthorized")
         return
     }
 
-    let cleanUserData : any = {
-        height: rawUserData.height || "0",
-        weight: rawUserData.weight || "0",
-        blood_type: rawUserData.blood_type,
-        glycemia: rawUserData.glycemia || "0",
-        allergies:[],
-        conditions: [],
-        medications: []
+    let IdAller : any = rawUserData.allergies.split(",")
+    const IdCond : any = rawUserData.conditions.split(",")
+    const IdMed : any = rawUserData.medications.split(",")
+
+
+
+    let allerg : any = []
+    let condi:any = []
+    let med : any = []
+    //now get each one of them in the shit 
+    for (let i =0;i<IdAller.length;i++){
+        try{
+
+            const row = await AllergiesService.GetBy(Number(IdAller[i]),"id")
+            allerg.push(row)
+        }
+        catch(e){
+            console.log(e)
+        }
     }
 
-    rawUserData.allergies ="1,2"
-    console.log(rawUserData.allergies)
-    const IDsAllergies : number[]= rawUserData.allergies.split(",").map((element: any)=> {return Number(element)}) 
-    const IDsConditions : number[]= rawUserData.conditions.split(",").map((element: any)=> {return Number(element)}) 
-    const IDsMedications : number[]= rawUserData.medications.split(",").map((element: any)=> {return Number(element)}) 
+    for (let i =0;i<IdCond.length;i++){
+        try{
 
-    console.log(IDsAllergies)
-    cleanUserData.allergies = IDsAllergies.map(async (element) => { return await AllergiesService.GetBy(element , "id") })
-    cleanUserData.conditions = IDsConditions.map(async (element) => { return await ConditionsService.GetBy(element , "id") })
-    cleanUserData.medications= IDsMedications.map(async (element) => { return await MedicationsService.GetBy(element , "id") })
-    console.log(await AllergiesService.GetBy(1 , "id"))
+            const row = await ConditionsService.GetBy(Number(IdCond[i]),"id")
+            condi.push(row)
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+
+    for (let i =0;i<IdMed.length;i++){
+        try{
+
+            const row = await MedicationsService.GetBy(Number(IdMed[i]),"id")
+            med.push(row)
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+
+    
+
+    
 
 
     let allr : any = []
@@ -98,7 +123,15 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
     console.log("results", allr)
 
     //send the data 
-    res.status(200).send(cleanUserData)
+    res.status(200).send({
+        height: rawUserData.height || "0",
+        weight: rawUserData.weight || "0",
+        blood_type: rawUserData.blood_type,
+        glycemia: rawUserData.glycemia,
+        allergies:allerg,
+        conditions: condi,
+        medications: med
+    })
 
     
 }

@@ -13,10 +13,10 @@ const Delete = async (id : any) => {
 }
 
 const GetBy = async (id : any, field:any) => {
-    return await Allergies.findOne(
-        {where:{
+    return await Allergies.findOneBy(
+        {
             [field] : id
-        }}
+        }
     )
 }
 

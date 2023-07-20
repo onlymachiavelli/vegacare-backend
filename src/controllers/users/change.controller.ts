@@ -28,7 +28,6 @@ const Update : RequestHandler =async (req, res, next) =>{
     //verify authentification
     console.log("header",req.headers.authorization)
     if(!req.headers.authorization){
-        console.log("No fucking token")
 
         res.status(401).send("No token")
         return
@@ -112,9 +111,9 @@ const Update : RequestHandler =async (req, res, next) =>{
         }
         datas.glycemia = req.body.glycemia
     }
-    datas.allergies = req.body.allergies
-    datas.medications = req.body.medications
-    datas.conditions = req.body.conditions
+    if (req.body.allergies)datas.allergies = req.body.allergies
+    if (req.body.medications)datas.medications = req.body.medications
+    if (req.body.conditions)datas.conditions = req.body.conditions
     console.log(datas)
     if(Object.keys(datas).length === 0){
         res.status(400).send("No data given")
