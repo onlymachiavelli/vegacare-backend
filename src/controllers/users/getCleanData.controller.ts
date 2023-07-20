@@ -111,6 +111,17 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
     
 
 
+    let allr : any = []
+    //allergies 
+    const targets = [1,2,3]
+    targets.map(async(data: any, index:any)=>{
+        const element :any =  await AllergiesService.GetBy(data, "id")
+        console.log("thing",element )
+        if (element)allr.push(element)
+    })
+
+    console.log("results", allr)
+
     //send the data 
     res.status(200).send({
         height: rawUserData.height || "0",

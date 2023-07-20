@@ -7,6 +7,7 @@ import Create from './../controllers/users/create.controller'
 import SignIn from "./../controllers/users/signin"
 import GetMe from "../controllers/users/getMe.controller"
 import GetCleanData from "../controllers/users/getCleanData.controller"
+import resetPassword from "../controllers/users/resetPassword.controller"
 
 const UsersRoute = Router()
 
@@ -18,5 +19,6 @@ UsersRoute.patch("/", Change)
 UsersRoute.post("/login", SignIn)
 UsersRoute.get("/me", GetMe)
 UsersRoute.get("/cleanData", GetCleanData)
+UsersRoute.post("/resetpassword", resetPassword)
 
 export default UsersRoute

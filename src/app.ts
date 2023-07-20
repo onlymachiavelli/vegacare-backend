@@ -8,6 +8,11 @@ import ConditionsRoute from "./routes/ConditionsRoute"
 import MedicationsRoute from "./routes/MedicationsRoute"
 import AllergiesRoute from "./routes/AllergiesRoute"
 import UsersRoute from "./routes/UsersRoute"
+import MailRoute from "./routes/SendMail.Route"
+
+import {createServer} from "http";
+import { Server } from "socket.io";
+import { connected } from "process"
 
 const cors = require("cors")
 
@@ -30,6 +35,7 @@ app.listen(PORT,async () =>{
       app.use("/medications", MedicationsRoute)
       app.use("/allergies", AllergiesRoute)
       app.use("/users", UsersRoute)
+      app.use("/mails", MailRoute)
 
       //the rest of the middle wares ! 
     })
@@ -43,19 +49,22 @@ app.listen(PORT,async () =>{
   //connect to Mongoodse
 })
 
+export default app
 
 
-// socket part 
+// socket stuff
 
-import { createServer } from "http";
-import { Server } from "socket.io";
+const httpServer = createServer(app)
+const io = new Server(httpServer, { /* options */ });
 
-const httpServer = createServer(app);
-const io = new Server(httpServer);
-const SocketPort = process.env.SOCKET_PORT || 8080
 io.on("connection", (socket:any) => {
-  // ...
-});
+  console.log(`connected with the socket ID ${socket.id}`)
+  
+  socket.on("linkIDs",(userID : number, socketID : any)=>{
+    console.log(`the socket ID "${socketID}" is linked with the user ID "${userID}"`)
+  })
+  
+})
 
-httpServer.listen(SocketPort);
 
+httpServer.listen(8080);
