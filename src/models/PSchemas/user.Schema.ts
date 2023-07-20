@@ -71,6 +71,18 @@ class Users extends TypeORM.BaseEntity{
     @TypeORM.Column({nullable : true, default : "" })
     medications : string
 
+    @TypeORM.Column({nullable:true, default : null})
+    code : Number 
+
+    
+
+    
+    @TypeORM.Column({nullable:true, default : null})
+    codeValidity : Date 
+
+    
+
+    
 
 }
 
