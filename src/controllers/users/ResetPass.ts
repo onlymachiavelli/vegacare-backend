@@ -56,7 +56,7 @@ const ResetPass :RequestHandler = async (req, res, nxt) =>{
     
 
     //verify the codes 
-    if (target.code != req.body.code) {
+    if (Number(target.code) != Number(req.body.code)) {
         res.status(401).send("Code is invalid")
         return
     }
