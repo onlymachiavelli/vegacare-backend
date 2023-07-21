@@ -28,11 +28,11 @@ const resetPassword : RequestHandler = async (req : any, res : any, next : any) 
 
     const id : any = user.id
     const realCode : any = 1234 //should be in user data
-    const currentTime : number = new Date().getSeconds()
-    const created_at : number = currentTime - 4*60 //should be stored in user data
-    const expiresIn : number = 5*60
+    const currentTime : any = new Date()
+    const created_at : any = user.codeValidity
+    const expiresIn : number = 5
 
-    if(!realCode||(created_at+expiresIn<currentTime)){
+    if(!realCode||(Format.subtract(created_at,currentTime).toMinutes()<expiresIn)){
         res.status(401).send("no change has been asked or delay expired")
         return
     }
@@ -49,9 +49,9 @@ const resetPassword : RequestHandler = async (req : any, res : any, next : any) 
 
     let datas : any = {
         password:hashedPassword,
-        updated_at: Format.format(new Date, "YYYY-MM-DD HH:mm:ss")
-        //reset code 
-        //set the code creation to 0
+        updated_at: Format.format(new Date, "YYYY-MM-DD HH:mm:ss"),
+        code: null,
+        codeValidity : 0
     }
 
     try{
