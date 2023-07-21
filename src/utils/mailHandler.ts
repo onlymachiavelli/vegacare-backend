@@ -16,8 +16,8 @@ const mailGenerator = new Mailgen({
 const config = {
     service : "gmail",
     auth : {
-        user : process.env.mailAccount,
-        pass : process.env.mailPass
+        user : String(process.env.MAILACCOUNT),
+        pass : String(process.env.MAILPASS)
     }
 }
 

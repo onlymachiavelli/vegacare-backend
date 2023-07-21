@@ -39,10 +39,10 @@ const resetPassword : RequestHandler = (req : any, res : any, next : any) => {
     };
     
     // Generate an HTML email with the provided contents
-    var emailBody = mailGenerator.generate(email);
+    var emailBody = mailGenerator.generate(email)
     
     // Generate the plaintext version of the e-mail (for clients that do not support HTML)
-    var emailText = mailGenerator.generatePlaintext(email);
+    var emailText = mailGenerator.generatePlaintext(email)
 
     if(!req.headers.authorization){
         res.status(401).send("No token")
@@ -96,7 +96,7 @@ const resetPassword : RequestHandler = (req : any, res : any, next : any) => {
     /*
     try{
         transporter.sendMail({
-            from: process.env.mailAccount,
+            from: process.env.MAILACCOUNT,
             to: `${receiver}`,
             subject: '[VegaCare] Reset your password',
             html: emailBody,
