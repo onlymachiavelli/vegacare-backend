@@ -124,6 +124,10 @@ const GetCleanData : Express.RequestHandler = async (req : any, res : any, next 
 
     //send the data 
     res.status(200).send({
+        name: rawUserData.fullname ,
+        gender : rawUserData.gender, 
+        bday : rawUserData.bday,
+        
         height: rawUserData.height || "0",
         weight: rawUserData.weight || "0",
         blood_type: rawUserData.blood_type,
