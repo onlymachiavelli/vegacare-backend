@@ -1,4 +1,4 @@
-import Relations from "../models/PSchemas/relation.entity"
+import Relations from "../models/PSchemas/relations.entity"
 
 const GetAll = async () =>{
     return Relations.find()

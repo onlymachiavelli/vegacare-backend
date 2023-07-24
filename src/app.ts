@@ -9,6 +9,7 @@ import MedicationsRoute from "./routes/MedicationsRoute"
 import AllergiesRoute from "./routes/AllergiesRoute"
 import UsersRoute from "./routes/UsersRoute"
 import MailRoute from "./routes/SendMail.Route"
+import RelationsRoute from "./routes/RelationsRoute"
 
 import {createServer} from "http";
 import { Server } from "socket.io";
@@ -36,6 +37,7 @@ app.listen(PORT,async () =>{
       app.use("/allergies", AllergiesRoute)
       app.use("/users", UsersRoute)
       app.use("/mails", MailRoute)
+      app.use("/relations", RelationsRoute)
 
       //the rest of the middle wares ! 
     })

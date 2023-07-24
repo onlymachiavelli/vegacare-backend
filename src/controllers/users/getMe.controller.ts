@@ -12,7 +12,7 @@ const GetMe:Express.RequestHandler = async (req, res, next) =>{
     }
     //get the token bearer 
     const [Bearer, token] : any = req.headers.authorization?.split(" ")
-
+    console.log(req.headers.authorization)
 
     if (!Bearer || !token) {
         res.status(401).send("No token")

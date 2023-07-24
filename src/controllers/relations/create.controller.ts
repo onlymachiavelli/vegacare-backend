@@ -7,18 +7,23 @@ import Jwt from 'jsonwebtoken'
 
 
 const Create : Express.RequestHandler = async (req ,res,next) => {
-    const id : number = getIDFromToken(req.body.authorization, res)
+    const id : number = getIDFromToken(req.headers.authorization, res)
     if(id==-1){
         next()
         return
     }
 
-    const user : any = await UsersServices.GetOne(id, "id")
+    const user : any = await UsersServices.GetOne("id", id)
 
     const current : any = Format.format(
         new Date, 
         "YYYY-MM-DD HH:mm:ss"
     )
+
+    const ContactUser : any = await UsersServices.GetOne("phone", req.body.phone)
+    if(!ContactUser){
+        const ContactUser = {id:null}
+    }
 
     let datas = {}
     switch(user.type){
@@ -29,30 +34,35 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
                 return
             }
             
-            const doesUserAlreadyExist : any = await UsersServices.GetOne(req.body.phone, "phone")
-            if(doesUserAlreadyExist){
-                res.status(401).send("User already exist")
-                next()
-                return
-            }
+            /*
+            phone: string
+            patients: Users[]
+            supervisors: Users[]
+            name: string
+            //pending, approved
+            status  :string 
+            created_at : Date
+            updated_at : Date
+            */
 
             datas = {
                 phone:req.body.phone,
-                patient_id:id,
+                patient:id,
+                supervisors:ContactUser.id,
                 name:req.body.name,
-                gender:req.body.gender,
-                pending:"Approuved",
+                status:"Approuved",
                 created_at:current,
                 updated_at:current
             }
             break
         case "supervisor":
+        
             datas = {
-                phone:req.body.phone, /// to be changed
-                patient_id:id, // to be changed
+                phone:ContactUser.phone,
+                patient:ContactUser.id,
+                supervisors:id,
                 name:req.body.name,
-                gender:req.body.gender,
-                pending:"Pending",
+                status:"Pending",
                 created_at:current,
                 updated_at:current
             }
@@ -73,11 +83,10 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
 }
 
 
-
-
 const getIDFromToken : any = (authorization : any, res : any) => {
     if(!authorization){
         res.status(401).send("No token")
+        console.log("No auth")
         return -1
     }
     //get the token bearer 
@@ -86,6 +95,7 @@ const getIDFromToken : any = (authorization : any, res : any) => {
 
     if (!Bearer || !token) {
         res.status(401).send("No token")
+        console.log("no token or bearer")
         return -1
     }
     //get payload 
@@ -104,4 +114,8 @@ const getIDFromToken : any = (authorization : any, res : any) => {
         res.status(401).send("Invalid token")
         return -1
     }
+
+    return payload.id
 }
+
+export default Create
