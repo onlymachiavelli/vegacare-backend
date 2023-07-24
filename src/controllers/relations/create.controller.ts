@@ -31,44 +31,37 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
         ContactUser = {id:null,fullname:req.body.name}
     }
 
-    let datas = {}
+    let datas : any = {}
+
+    if(!ContactUser){
+        ContactUser = {id:null,fullname:req.body.name}
+    }
+
     switch(user.type){
         case "patient":
-            if(!req.body.phone){
-                res.status(401).send("invalid datas")
-                next()
-                return
-            }
-            
-            /*
-            phone: string
-            patients: Users[]
-            supervisors: Users[]
-            name: string
-            //pending, approved
-            status  :string 
-            created_at : Date
-            updated_at : Date
-            */
 
             datas = {
                 phone:req.body.phone,
-                patient:id,
+                patients:id,
                 supervisors:ContactUser.id,
                 name:ContactUser.fullname,
-                status:"Approuved",
+                status:"approuved",
                 created_at:current,
                 updated_at:current
+            }
+
+            if(!datas.supervisors){
+                datas.status = "Pending"
             }
             break
         case "supervisor":
         
             datas = {
                 phone:req.body.phone,
-                patient:ContactUser.id,
+                patients:ContactUser.id,
                 supervisors:id,
                 name:user.fullname,
-                status:"Pending",
+                status:"pending",
                 created_at:current,
                 updated_at:current
             }
@@ -78,7 +71,7 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
             next()
             return
     }
-
+    console.log(datas)
     Services.Save(datas).then((r : any) => {
         res.status(200).send("relation created")
     }).catch((e) =>{
