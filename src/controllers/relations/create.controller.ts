@@ -20,15 +20,21 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
         "YYYY-MM-DD HH:mm:ss"
     )
 
-    const ContactUser : any = await UsersServices.GetOne("phone", req.body.phone)
+    if(!req.body.name||!req.body.phone){
+        res.status(401).send("invalid data")
+        next()
+        return
+    }
+
+    let ContactUser : any = await UsersServices.GetOne("phone", req.body.phone)
     if(!ContactUser){
-        const ContactUser = {id:null}
+        ContactUser = {id:null,fullname:req.body.name}
     }
 
     let datas = {}
     switch(user.type){
         case "patient":
-            if(!req.body.phone||!req.body.name||!req.body.gender){
+            if(!req.body.phone){
                 res.status(401).send("invalid datas")
                 next()
                 return
@@ -49,7 +55,7 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
                 phone:req.body.phone,
                 patient:id,
                 supervisors:ContactUser.id,
-                name:req.body.name,
+                name:ContactUser.fullname,
                 status:"Approuved",
                 created_at:current,
                 updated_at:current
@@ -61,7 +67,7 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
                 phone:req.body.phone,
                 patient:ContactUser.id,
                 supervisors:id,
-                name:req.body.name,
+                name:user.fullname,
                 status:"Pending",
                 created_at:current,
                 updated_at:current
