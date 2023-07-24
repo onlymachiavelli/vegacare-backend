@@ -5,6 +5,7 @@ import Medications from './Medications.schema'
 import TypeAcc from '../../@types/typeAcc'
 import BloodType from '../../@types/blood'
 import Gender from '../../@types/gender.enum'
+import Relations from './relations.entity'
 @TypeORM.Entity()
 
 class Users extends TypeORM.BaseEntity{
@@ -80,6 +81,13 @@ class Users extends TypeORM.BaseEntity{
     @TypeORM.Column({nullable:true, default : null})
     codeValidity : Date 
 
+
+    @TypeORM.ManyToMany(type => Relations, relation => relation.patients)
+    relations: Relations[]
+
+    // supervisor id: many to many
+    @TypeORM.ManyToMany(type => Relations, relation => relation.supervisors)
+    relations2: Relations[]
     
     
     
