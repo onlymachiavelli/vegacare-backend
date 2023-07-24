@@ -58,7 +58,7 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
         case "supervisor":
         
             datas = {
-                phone:ContactUser.phone,
+                phone:req.body.phone,
                 patient:ContactUser.id,
                 supervisors:id,
                 name:req.body.name,

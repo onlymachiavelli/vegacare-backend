@@ -7,6 +7,7 @@ import Jwt from 'jsonwebtoken'
 
 const Validation : Express.RequestHandler = (req,res,next) => {
     const isValid = req.body.isValid
+    const relationID = req.body.id
     if(!isValid){
         res.status(401).send("invalid datas")
         next()
@@ -16,9 +17,11 @@ const Validation : Express.RequestHandler = (req,res,next) => {
     switch(isValid){
         case "Valid" :
             // update pending to Approuved
+            Services.Update(relationID,{status:"Approuved"})
             break
         case "Rejected" : 
             // delete or change to Refused or something
+            Services.Delete(relationID)
             break
         default :
             res.status(401).send("invalid datas")
