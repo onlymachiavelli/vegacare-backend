@@ -22,6 +22,10 @@ class Relations extends TypeORM.BaseEntity {
     @TypeORM.Column()
     name: string
 
+
+    //pending, approved
+    @TypeORM.Column({nullable : false, default :"pending"})
+    status  :string 
     @TypeORM.Column()
     created_at : Date
 
