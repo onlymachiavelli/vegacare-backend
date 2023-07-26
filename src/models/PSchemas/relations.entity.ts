@@ -12,10 +12,12 @@ class Relations extends TypeORM.BaseEntity {
 
     // patient id: many to many 
     @TypeORM.ManyToMany(type => Users, user => user.relations)
+    @TypeORM.JoinTable()
     patients: Users[]
 
     // supervisors many to many
     @TypeORM.ManyToMany(type => Users, user => user.relations2)
+    @TypeORM.JoinTable()
     supervisors: Users[]
 
 

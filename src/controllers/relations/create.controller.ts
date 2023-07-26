@@ -4,6 +4,7 @@ import * as UsersServices from './../../services/users.services'
 import * as Services from './../../services/relations.service'
 import Format from 'date-and-time'
 import Jwt from 'jsonwebtoken'
+import Relations from '../../models/PSchemas/relations.entity'
 
 
 const Create : Express.RequestHandler = async (req ,res,next) => {
@@ -31,7 +32,7 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
         ContactUser = {id:null,fullname:req.body.name}
     }
 
-    let datas : any = {}
+    let relation = new Relations()
 
     if(!ContactUser){
         ContactUser = {id:null,fullname:req.body.name}
@@ -40,39 +41,35 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
     switch(user.type){
         case "patient":
 
-            datas = {
-                phone:req.body.phone,
-                patients:id,
-                supervisors:ContactUser.id,
-                name:ContactUser.fullname,
-                status:"approuved",
-                created_at:current,
-                updated_at:current
-            }
+            relation.phone = req.body.phone
+            relation.patients = [user]
+            relation.supervisors = [ContactUser]
+            relation.name = ContactUser.fullname
+            relation.status ="approuved"
+            relation.created_at = current
+            relation.updated_at = current
 
-            if(!datas.supervisors){
-                datas.status = "Pending"
+            if(!relation.supervisors){
+                relation.status = "Pending"
             }
             break
         case "supervisor":
-        
-            datas = {
-                phone:req.body.phone,
-                patients:ContactUser.id,
-                supervisors:id,
-                name:user.fullname,
-                status:"pending",
-                created_at:current,
-                updated_at:current
-            }
+            relation.phone = req.body.phone
+            relation.patients = [ContactUser]
+            relation.supervisors = [user]
+            relation.name = user.fullname
+            relation.status ="pending"
+            relation.created_at = current
+            relation.updated_at = current
+
             break
         default:
             res.status(401).send("invalid user type")
             next()
             return
     }
-    console.log(datas)
-    Services.Save(datas).then((r : any) => {
+    console.log(relation)
+    Services.Save(relation).then((r : any) => {
         res.status(200).send("relation created")
     }).catch((e) =>{
         console.log(e)
