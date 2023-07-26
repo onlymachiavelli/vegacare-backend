@@ -85,10 +85,7 @@ class Users extends TypeORM.BaseEntity{
     @TypeORM.ManyToMany(type => Relations, relation => relation.patients)
     relations: Relations[]
 
-    // supervisor id: many to many
-    @TypeORM.ManyToMany(type => Relations, relation => relation.supervisors)
-    relations2: Relations[]
-    
+ 
     
     
 

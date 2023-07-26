@@ -57,7 +57,7 @@ const GetRelated : Express.RequestHandler = async (req,res,next) => {
                 
                 let supervisors = []
                 for(var i=0;i++;i<relationsP.length){
-                    supervisors.push(await UsersServices.GetOne('id',relationsP[i].supervisors[0].id))
+                    supervisors.push(await UsersServices.GetOne('phone',relationsP[i].phone))
                 }
                 res.status(400).send(supervisors)
                 next()

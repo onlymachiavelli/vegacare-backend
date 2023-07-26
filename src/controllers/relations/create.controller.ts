@@ -5,6 +5,7 @@ import * as Services from './../../services/relations.service'
 import Format from 'date-and-time'
 import Jwt from 'jsonwebtoken'
 import Relations from '../../models/PSchemas/relations.entity'
+import Users from '../../models/PSchemas/user.Schema'
 
 
 const Create : Express.RequestHandler = async (req ,res,next) => {
@@ -28,36 +29,26 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
     }
 
     let ContactUser : any = await UsersServices.GetOne("phone", req.body.phone)
-    if(!ContactUser){
-        ContactUser = {id:null,fullname:req.body.name}
-    }
-
     let relation = new Relations()
-
-    if(!ContactUser){
-        ContactUser = {id:null,fullname:req.body.name}
-    }
 
     switch(user.type){
         case "patient":
 
             relation.phone = req.body.phone
             relation.patients = [user]
-            relation.supervisors = [ContactUser]
-            relation.name = ContactUser.fullname
+            relation.name = ContactUser.fullname || req.body.name
             relation.status ="approuved"
             relation.created_at = current
             relation.updated_at = current
 
-            if(!relation.supervisors){
+            if(!ContactUser ){
                 relation.status = "Pending"
             }
             break
         case "supervisor":
             relation.phone = req.body.phone
             relation.patients = [ContactUser]
-            relation.supervisors = [user]
-            relation.name = user.fullname
+            relation.name = user.fullname || req.body.name
             relation.status ="pending"
             relation.created_at = current
             relation.updated_at = current
