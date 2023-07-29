@@ -10,6 +10,7 @@ import AllergiesRoute from "./routes/AllergiesRoute"
 import UsersRoute from "./routes/UsersRoute"
 import MailRoute from "./routes/SendMail.Route"
 import RelationsRoute from "./routes/RelationsRoute"
+import NotificationsRoute from "./routes/NotificationsRoute"
 
 import {createServer} from "http";
 import { Server } from "socket.io";
@@ -38,6 +39,7 @@ app.listen(PORT,async () =>{
       app.use("/users", UsersRoute)
       app.use("/mails", MailRoute)
       app.use("/relations", RelationsRoute)
+      app.use("/notifications", NotificationsRoute)
 
       //the rest of the middle wares ! 
     })

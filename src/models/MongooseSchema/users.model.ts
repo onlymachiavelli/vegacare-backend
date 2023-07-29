@@ -70,7 +70,7 @@ const userSchema = new mongoose.Schema({
         ],
 
 
-    },
+    },/*
     Notification  :[
         {
             type : {
@@ -85,7 +85,8 @@ const userSchema = new mongoose.Schema({
             
         }
     ]
-    ,
+    ,*/
+    
     //dates 
     created_at : {
         type : Date
