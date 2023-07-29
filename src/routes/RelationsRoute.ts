@@ -9,6 +9,6 @@ const RelationsRoute = Router()
 RelationsRoute.post("/", Create)
 RelationsRoute.get("/", GetAll)
 RelationsRoute.post("/validate", Validation)
-RelationsRoute.get("/getRelated", GetRelated)
+RelationsRoute.post("/getRelated", GetRelated)
 
 export default RelationsRoute
