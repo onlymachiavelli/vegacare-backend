@@ -10,6 +10,7 @@ import GetCleanData from "../controllers/users/getCleanData.controller"
 import resetPassword from "../controllers/users/resetPassword.controller"
 import Generate from "../controllers/users/GenerateCode"
 import ResetPass from "../controllers/users/ResetPass";
+import AppendHealtData from "../controllers/users/appendHealthData.controller"
 const UsersRoute = Router()
 
 UsersRoute.post("/", Create)
@@ -23,5 +24,6 @@ UsersRoute.get("/cleanData", GetCleanData)
 UsersRoute.post("/resetpassword", resetPassword)
 UsersRoute.post("/reqReset", Generate)
 UsersRoute.post("/reset", ResetPass)
+UsersRoute.patch("/append", AppendHealtData)
 
 export default UsersRoute
