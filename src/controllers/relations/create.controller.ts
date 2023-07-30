@@ -30,18 +30,18 @@ const Create : Express.RequestHandler = async (req ,res,next) => {
 
     let ContactUser : any = await UsersServices.GetOne("phone", req.body.phone)
     let relation = new Relations()
-
+    console.log(ContactUser)
     switch(user.type){
         case "patient":
 
             relation.phone = req.body.phone
             relation.patients = [user]
-            relation.name = ContactUser.fullname || req.body.name
+            relation.name = ContactUser ? ContactUser.fullname : req.body.name
             relation.status ="approuved"
             relation.created_at = current
             relation.updated_at = current
 
-            if(!ContactUser ){
+            if(!ContactUser){
                 relation.status = "Pending"
             }
             break
