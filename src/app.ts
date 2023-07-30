@@ -11,7 +11,7 @@ import UsersRoute from "./routes/UsersRoute"
 import MailRoute from "./routes/SendMail.Route"
 import RelationsRoute from "./routes/RelationsRoute"
 import NotificationsRoute from "./routes/NotificationsRoute"
-
+import BCRouter from "./routes/bc.route"
 import {createServer} from "http";
 import { Server } from "socket.io";
 import { connected } from "process"
@@ -40,6 +40,7 @@ app.listen(PORT,async () =>{
       app.use("/mails", MailRoute)
       app.use("/relations", RelationsRoute)
       app.use("/notifications", NotificationsRoute)
+      app.use("/bc", BCRouter)
 
       //the rest of the middle wares ! 
     })
